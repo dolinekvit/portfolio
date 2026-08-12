@@ -1,4 +1,5 @@
-import { Box, Em, Heading, Image, Text, Link, DataList } from '@chakra-ui/react';
+import { Box, Em, Heading, Image, Text, Link } from '@chakra-ui/react';
+import { Bio } from '@/components/bio';
 
 export default function Home() {
   return (
@@ -14,7 +15,7 @@ export default function Home() {
           </span>
         </Box>
         <Box>
-          <Image src="/profile.jpeg" alt="Vít Dolínek" borderRadius={'full'} boxSize={'100px'} />
+          <Image src="/profile.jpeg" alt="Vít Dolínek" borderRadius={'full'} boxSize={'90px'} />
         </Box>
       </Box>
       <Box>
@@ -27,37 +28,7 @@ export default function Home() {
         </Text>
       </Box>
       <Box>
-        <Heading>Bio</Heading>
-        <DataList.Root gap={'1'} orientation={'horizontal'}>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>1998</DataList.ItemLabel>
-            <DataList.ItemValue>Born in Sternberk, Czechia</DataList.ItemValue>
-          </DataList.Item>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>2017</DataList.ItemLabel>
-            <DataList.ItemValue>High school diploma, SPS a SOU Unicov</DataList.ItemValue>
-          </DataList.Item>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>2017</DataList.ItemLabel>
-            <DataList.ItemValue>Web developer at Devmates</DataList.ItemValue>
-          </DataList.Item>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>2018</DataList.ItemLabel>
-            <DataList.ItemValue>Web developer at Orbinet</DataList.ItemValue>
-          </DataList.Item>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>2019</DataList.ItemLabel>
-            <DataList.ItemValue>Frontend developer at QCM</DataList.ItemValue>
-          </DataList.Item>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>2022</DataList.ItemLabel>
-            <DataList.ItemValue>Frontend developer at Smartlook</DataList.ItemValue>
-          </DataList.Item>
-          <DataList.Item>
-            <DataList.ItemLabel minW={'50px'}>2023</DataList.ItemLabel>
-            <DataList.ItemValue>Software engineer at Cisco</DataList.ItemValue>
-          </DataList.Item>
-        </DataList.Root>
+        <Bio />
       </Box>
     </Box>
   );
