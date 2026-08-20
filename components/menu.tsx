@@ -16,6 +16,7 @@ export default function Menu() {
       justifyContent={'center'}
       gap={'3'}
       flexDir={'row'}
+      zIndex={'2'}
     >
       <NavLink href={'/'} label={'Home'} />
       <NavLink href={'/experience'} label={'Experience'} />
