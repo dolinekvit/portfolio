@@ -1,21 +1,26 @@
-'use client'
+'use client';
 
 import NextLink from 'next/link';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import { usePathname } from 'next/navigation';
+import { ReactNode } from 'react';
 
 interface LinkProps {
   href: string;
   label: string;
+  icon?: ReactNode | null;
 }
 
-export default function NavLink({ href, label }: LinkProps) {
-  const path = usePathname()
-  const isActive = path === href
+export default function NavLink({ href, label, icon }: LinkProps) {
+  const path = usePathname();
+  const isActive = path === href;
 
   return (
-    <ChakraLink asChild={true} _currentPage={{ fontWeight: "bold" }} aria-current={isActive ? "page" : undefined}>
-      <NextLink href={href}>{label}</NextLink>
+    <ChakraLink asChild={true} _currentPage={{ fontWeight: 'bold' }} aria-current={isActive ? 'page' : undefined}>
+      <NextLink href={href}>
+        {icon}
+        {label}
+      </NextLink>
     </ChakraLink>
   );
 }

@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import NavLink from './nav-link';
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export default function Menu() {
   return (
@@ -20,7 +21,7 @@ export default function Menu() {
     >
       <NavLink href={'/'} label={'Home'} />
       <NavLink href={'/experience'} label={'Experience'} />
-      <NavLink href={'#'} label={'Source'} />
+      <NavLink href={'#'} label={'Source'} icon={<GitHubLogoIcon />}/>
     </Box>
   );
 }
