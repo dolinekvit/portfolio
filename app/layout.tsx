@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Provider>
           <Menu />
-          <Container maxW={'lg'}>{children}</Container>
+          <Container maxW={'lg'} py={'5'}>{children}</Container>
         </Provider>
       </body>
     </html>

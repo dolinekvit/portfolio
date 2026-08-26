@@ -23,7 +23,7 @@ export default function Home() {
         <Text textStyle={'sm'}>
           I am currently working at Cisco company and am based in Olomouc, Czechia. My expertise is fullstack
           development in React and NodeJS with more than 7 years of experience. I am big fan of CLI tools and make my
-          own dotfile configs that you can check out on my <Link href={'#'}>GitLab</Link>. I welcome challenges and try
+          own dotfile configs that you can check out on my <Link href={'https://github.com/dolinekvit/dotfiles'}>Github</Link>. I welcome challenges and try
           to improve both my hard and soft skills.
         </Text>
       </Box>

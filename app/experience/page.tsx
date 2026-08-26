@@ -1,26 +1,20 @@
 import { jobs } from '@/constants/jobs';
+import { Box, Heading, Text } from '@chakra-ui/react';
+import { format } from 'date-fns';
 
 export default function Experience() {
   return (
-     <div>
-        <h2>Experience</h2>
+     <Box display={'flex'} flexDir={'column'} gap={'6'}>
         {jobs.map((job) => (
-          <div className='flex flex-col gap-1.5' key={job.company}>
-            <div>
-              <h3 className='font-bold'>{job.position}</h3>
-              <span>-</span>
-              <span>
-                {job.from.toString()} to xx
-              </span>
-            </div>
-            <div className='flex flex-row gap-2'>
-              <span className='font-bold'>{job.company}</span>
-              <span>-</span>
-              <span className='italic'>{job.location}</span>
-            </div>
+          <Box key={job.company}>
+              <Heading>{job.position}</Heading>
+              <Text>{job.company}</Text>
+              <Text fontSize={'xs'} fontWeight={'thin'}>
+                {format(job.from, 'MMMM yyyy')} - {job.to ? format(job.to, 'MMMM yyyy') : 'now'}
+              </Text>
             <p>{job.description}</p>
-          </div>
+          </Box>
         ))}
-      </div>
+      </Box>
   )
 }
