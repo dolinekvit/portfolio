@@ -21,7 +21,7 @@ export default function Menu() {
     >
       <NavLink href={'/'} label={'Home'} />
       <NavLink href={'/experience'} label={'Experience'} />
-      <NavLink href={'https://github.com/dolinekvit/portfolio'} label={'Source'} icon={<GitHubLogoIcon />}/>
+      <NavLink href={'https://github.com/dolinekvit/portfolio'} label={'Source'} icon={<GitHubLogoIcon />} linkProps={{ target: '_blank' }}/>
     </Box>
   );
 }
