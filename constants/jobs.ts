@@ -46,7 +46,7 @@ export const jobs: Job[] = [
       releases.`
   },
   {
-    company: 'Orbinet (OLC Webdesign s.r.o.)',
+    company: 'Orbinet',
     position: 'PHP Web Developer',
     location: 'Olomouc, Czechia',
     from: new Date(2018, 6, 1),
@@ -58,7 +58,7 @@ export const jobs: Job[] = [
       adapting each build to the client's brand and requirements.`
   },
   {
-    company: 'Targito.com s.r.o',
+    company: 'Targito.com, s.r.o',
     position: 'Web developer',
     location: 'Prague, Czechia',
     from: new Date(2017, 3, 1),
