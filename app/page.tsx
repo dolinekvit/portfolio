@@ -1,5 +1,6 @@
 import { Box, Em, Heading, Image, Text, Link } from '@chakra-ui/react';
 import { Bio } from '@/components/bio';
+import { PCModel } from '@/components/pc-model';
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
         </Box>
       </Box>
       <Box display={'flex'} justifyContent={'center'}>
-        <Image src={'/torii.png'} alt={'Torii gate'} boxSize={'300px'} />
+        <PCModel />
       </Box>
       <Box>
         <Heading>Work</Heading>
