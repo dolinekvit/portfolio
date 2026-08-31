@@ -1,14 +1,14 @@
 'use client';
-import { Box } from '@chakra-ui/react';
+import { Box, IconButton } from '@chakra-ui/react';
 import NavLink from './nav-link';
-import { GitHubLogoIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
+import { Cross1Icon, GitHubLogoIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
-const lightMenuProps = {  bg: 'rgba(255, 255, 255, 0.5)', backdropFilter: 'blur(5px)' } 
-const darkMenuProps = {  bg: 'rgba(32, 32, 35, 0.5)', backdropFilter: 'blur(5px)'  }
+const lightMenuProps = { bg: 'rgba(255, 255, 255, 0.5)', backdropFilter: 'blur(5px)' };
+const darkMenuProps = { bg: 'rgba(32, 32, 35, 0.5)', backdropFilter: 'blur(5px)' };
 
-const mobileBreakpoints = { base: 'flex', md: 'none' }
-const desktopBreakpoints = { base: 'none', md: 'flex' }
+const mobileBreakpoints = { base: 'flex', md: 'none' };
+const desktopBreakpoints = { base: 'none', md: 'flex' };
 
 function Links() {
   return (
@@ -28,7 +28,7 @@ function Links() {
 export default function Menu() {
   const [mobileMenuOpen, isMobileMenuOpen] = useState(false);
 
-  const onHamburgerClick = () => isMobileMenuOpen(!mobileMenuOpen)
+  const onHamburgerClick = () => isMobileMenuOpen(!mobileMenuOpen);
 
   return (
     <>
@@ -46,7 +46,15 @@ export default function Menu() {
           <Links />
         </Box>
         <Box display={mobileBreakpoints}>
-          <HamburgerMenuIcon onClick={onHamburgerClick} />
+          {mobileMenuOpen ? (
+            <IconButton variant={'ghost'} size={'xs'} aria-label={'Close menu'} onClick={onHamburgerClick}>
+              <Cross1Icon />
+            </IconButton>
+          ) : (
+            <IconButton variant={'ghost'} size={'xs'} aria-label={'Open menu'} onClick={onHamburgerClick}>
+              <HamburgerMenuIcon />
+            </IconButton>
+          )}
         </Box>
       </Box>
       {mobileMenuOpen && (
@@ -57,6 +65,10 @@ export default function Menu() {
           flexDir={'column'}
           alignItems={'center'}
           gap={'1'}
+          position={'absolute'}
+          width={'full'}
+          zIndex={'2'}
+          p={'3'}
         >
           <Links />
         </Box>
