@@ -4,8 +4,11 @@ import NavLink from './nav-link';
 import { GitHubLogoIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
-const lightBackground = {  bg: 'rgba(255, 255, 255, 0.5)', backdropFilter: 'blur(5px)' } 
-const darkBackground = {  bg: 'rgba(32, 32, 35, 0.5)', backdropFilter: 'blur(5px)'  }
+const lightMenuProps = {  bg: 'rgba(255, 255, 255, 0.5)', backdropFilter: 'blur(5px)' } 
+const darkMenuProps = {  bg: 'rgba(32, 32, 35, 0.5)', backdropFilter: 'blur(5px)'  }
+
+const mobileBreakpoints = { base: 'flex', md: 'none' }
+const desktopBreakpoints = { base: 'none', md: 'flex' }
 
 function Links() {
   return (
@@ -30,8 +33,8 @@ export default function Menu() {
   return (
     <>
       <Box
-        _light={lightBackground}
-        _dark={darkBackground}
+        _light={lightMenuProps}
+        _dark={darkMenuProps}
         p={'3'}
         position={'sticky'}
         display={'flex'}
@@ -39,18 +42,18 @@ export default function Menu() {
         top={'0'}
         zIndex={'2'}
       >
-        <Box display={{ base: 'none', sm: 'flex' }} gap={'3'}>
+        <Box display={desktopBreakpoints} gap={'3'}>
           <Links />
         </Box>
-        <Box display={{ base: 'flex', sm: 'none' }}>
+        <Box display={mobileBreakpoints}>
           <HamburgerMenuIcon onClick={onHamburgerClick} />
         </Box>
       </Box>
       {mobileMenuOpen && (
         <Box
-          display={{ base: 'flex', sm: 'none' }}
-          _light={lightBackground}
-          _dark={darkBackground}
+          display={mobileBreakpoints}
+          _light={lightMenuProps}
+          _dark={darkMenuProps}
           flexDir={'column'}
           alignItems={'center'}
           gap={'1'}
