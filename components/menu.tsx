@@ -15,6 +15,7 @@ function Links() {
     <>
       <NavLink href={'/'} label={'Home'} />
       <NavLink href={'/experience'} label={'Experience'} />
+      <NavLink href={'/my-work/'} label={'My work'} />
       <NavLink
         href={'https://github.com/dolinekvit/portfolio'}
         label={'Source'}
