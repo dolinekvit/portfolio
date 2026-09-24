@@ -65,7 +65,7 @@ export default function Menu() {
           flexDir={'column'}
           alignItems={'center'}
           gap={'1'}
-          position={'absolute'}
+          position={'fixed'}
           width={'full'}
           zIndex={'2'}
           p={'3'}
