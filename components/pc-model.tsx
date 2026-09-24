@@ -1,46 +1,66 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as three from 'three';
+import { Box, Spinner } from '@chakra-ui/react';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const MODEL_URL = '/pc-model.glb';
 const FLOOR_Y = -0.781;
 
+const TARGET = new three.Vector3(0.35, -0.18, 0);
+const ORBIT_R = 6;
+const ORBIT_H = 2.2;
+const AZ_END = Math.PI;
+const INTRO_FRAMES = 110;
+
+const HALF_W = 0.98;
+const HALF_H = 0.92;
+
+const easeOutCirc = (x: number) => Math.sqrt(1 - Math.pow(x - 1, 4));
+
 export function PCModel() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const scene = new three.Scene();
-
-    const camera = new three.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(-2.6, 1.2, 2.15);
+    const camera = new three.OrthographicCamera(-1, 1, 1, -1, 0.01, 100);
 
     const renderer = new three.WebGLRenderer({ canvas, alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = three.PCFShadowMap; 
+    renderer.shadowMap.type = three.PCFShadowMap;
     renderer.toneMapping = three.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
 
+    const placeCamera = (az: number) => {
+      camera.position.set(
+        TARGET.x + ORBIT_R * Math.cos(az),
+        TARGET.y + ORBIT_H,
+        TARGET.z + ORBIT_R * Math.sin(az),
+      );
+      camera.lookAt(TARGET);
+    };
+    placeCamera(AZ_END);
+
     const controls = new OrbitControls(camera, canvas);
-    controls.target.set(0.1, -0.1, 0);
+    controls.target.copy(TARGET);
     controls.enableDamping = true;
     controls.enablePan = false;
     controls.enableZoom = false;
-    controls.autoRotate = true;
+    controls.autoRotate = false;
     controls.autoRotateSpeed = 0.9;
-    controls.maxPolarAngle = Math.PI / 2 - 0.05; 
-    controls.update();
+    controls.maxPolarAngle = Math.PI / 2 - 0.05;
 
     scene.add(new three.HemisphereLight(0xcfe0ff, 0x2a1d12, 1.4));
 
     const key = new three.DirectionalLight(0xfff2e0, 2.6);
-    key.position.set(2.5, 4.0, 2.0);
+    key.position.set(2.0, 5.6, 2.2);
     key.castShadow = true;
     key.shadow.mapSize.set(2048, 2048);
     key.shadow.bias = -0.0015;
@@ -67,19 +87,41 @@ export function PCModel() {
 
     let mixer: three.AnimationMixer | null = null;
     let frameId = 0;
+    let frame = 0;
     let cancelled = false;
     const timer = new three.Timer();
 
     const resize = () => {
       const w = canvas.clientWidth || 1;
       const h = canvas.clientHeight || 1;
-      camera.aspect = w / h;
+      const aspect = w / h;
+      const s = Math.max(HALF_H, HALF_W / aspect);
+      camera.left = -s * aspect;
+      camera.right = s * aspect;
+      camera.top = s;
+      camera.bottom = -s;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h, false);
     };
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
     resize();
+
+    const tick = () => {
+      frameId = requestAnimationFrame(tick);
+      timer.update();
+      mixer?.update(timer.getDelta());
+
+      if (frame <= INTRO_FRAMES) {
+        const t = frame / INTRO_FRAMES;
+        placeCamera(AZ_END + 4 * Math.PI * (1 - easeOutCirc(t)));
+        frame += 1;
+      } else {
+        controls.update();
+      }
+
+      renderer.render(scene, camera);
+    };
 
     new GLTFLoader().load(
       MODEL_URL,
@@ -104,31 +146,24 @@ export function PCModel() {
 
         scene.add(gltf.scene);
 
-
         if (lamp) {
           const warm = new three.PointLight(0xffd7a3, 1.4, 3.5, 2);
           warm.position.copy(lampPos);
           scene.add(warm);
         }
 
-        const clip = gltf.animations[0]; // Tail animation 
+        const clip = gltf.animations[0];
         if (clip) {
           mixer = new three.AnimationMixer(gltf.scene);
           mixer.clipAction(clip).play();
         }
+
+        setLoading(false);
+        tick();
       },
       undefined,
       (err) => console.error(`Failed to load ${MODEL_URL}`, err),
     );
-
-    const tick = () => {
-      frameId = requestAnimationFrame(tick);
-      timer.update();
-      mixer?.update(timer.getDelta());
-      controls.update();
-      renderer.render(scene, camera);
-    };
-    tick();
 
     return () => {
       cancelled = true;
@@ -147,9 +182,18 @@ export function PCModel() {
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{ width: '100%', maxWidth: 640, aspectRatio: '4 / 3', display: 'block' }}
-    />
+    <Box
+      position="relative"
+      width="min(92vw, 300px)"
+      aspectRatio="1"
+      flexShrink={0}
+      mt="-40px"
+      mb="-40px"
+    >
+      {loading && (
+        <Spinner position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" size="lg" />
+      )}
+      <canvas ref={canvasRef} style={{ width: '100%', height: '100%', display: 'block' }} />
+    </Box>
   );
 }
