@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Provider } from '@/components/ui/provider';
 import Menu from '@/components/menu';
-import { Container } from '@chakra-ui/react';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +17,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Provider>
           <Menu />
-          <Container maxW={'lg'} py={'5'}>{children}</Container>
+          {children}
         </Provider>
       </body>
     </html>
