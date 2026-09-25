@@ -1,14 +1,17 @@
-import { Card, Container, Image } from '@chakra-ui/react';
+import { Box, Container, Image, Link, Text } from '@chakra-ui/react';
 
 export default function MyWork() {
   return (
     <Container py={'5'}>
-      <Card.Root maxW={'300px'} variant={'outline'} borderWidth={'3px'} borderColor={'white'}>
-        <Image objectFit={'cover'} src={'/my-homepage.png'} alt={'My Homepage showcase'} />
-        <Card.Body p={'1'} textAlign={'center'} borderRadius={'l3'}>
-          My homepage
-        </Card.Body>
-      </Card.Root>
+      <Box maxW={'300px'}>
+        <Image objectFit={'cover'} src={'/my-homepage.png'} borderRadius={'5px'} alt={'My Homepage showcase'} />
+        <Box display={'flex'} flexDir={'column'} alignItems={'center'}>
+          <Link href={'https://github.com/dolinekvit/My-Homepage'}><Text>My homepage</Text></Link>
+          <Text textStyle={'sm'} fontWeight={'light'}>
+            (Chromium extension)
+          </Text>
+        </Box>
+      </Box>
     </Container>
   );
 }
